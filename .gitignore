@@ -1,5 +1,6 @@
 # Prerequisites
 *.d
+*.dep
 
 # Compiled Object files
 *.slo
@@ -30,3 +31,9 @@
 *.exe
 *.out
 *.app
+perfomance_test
+main
+
+
+# Do not ignore the mu parser library
+!libmuparser.*
