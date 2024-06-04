@@ -8,7 +8,7 @@ file on meshes using 16, 32, 64, 128 and 256 points per side. <br>
 
 For each mesh refinement level, the solution is calculated `REPS` times to get the average amount 
 of time spent calculating it, where `REPS` is a pre-processor variable set to 1 by default. <br>
-The results and statistics of each test are stored in the data folder. <br>
+The results and statistics of each test are stored in the `/data/` folder. <br>
 
 `plot_results.py` is then called by the script to create plots of the time taken and $L^2$ error
 as the mesh refinement increases. <br>
@@ -16,6 +16,9 @@ as the mesh refinement increases. <br>
 The script is run from the command line as `./performance_test.sh REPS`. The value of `REPS` in the last
 call of the script is stored inside `cache.dat` so that the `performance_test` executable only gets
 rebuilt if the new call of the script has a different value of `REPS`.<br>
+
+`hw.info` contains information regarding my personal hardware, to contextualise the results currently 
+in the `/data/` folder.
 
 
 ## Warnings ##
