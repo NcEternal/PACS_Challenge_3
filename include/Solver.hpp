@@ -77,7 +77,7 @@ public:
 	solver(double x_lb, double x_ub, double y_lb, double y_ub, unsigned nx, unsigned ny, const Func& force, const BC_Func& bc0, const BC_Func& bc1, const BC_Func& bc2, const BC_Func& bc3, const std::string& bc_types) :
 		solver(Mesh(x_lb, x_ub, y_lb, y_ub, nx, ny), force, bc0, bc1, bc2, bc3, bc_types) {}
 
-	solver(double x_lb, double x_ub, double y_lb, double y_ub, unsigned n,  const Func& force, const BC_Func& bc0, const BC_Func& bc1, const BC_Func& bc2, const BC_Func& bc3, const std::string& bc_types) :
+	solver(double x_lb, double x_ub, double y_lb, double y_ub, unsigned n, const Func& force, const BC_Func& bc0, const BC_Func& bc1, const BC_Func& bc2, const BC_Func& bc3, const std::string& bc_types) :
 		solver(Mesh(x_lb, x_ub, y_lb, y_ub, n), force, bc0, bc1, bc2, bc3, bc_types) {}
 
 	/* Parallel Constructors */
