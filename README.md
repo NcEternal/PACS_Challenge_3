@@ -3,12 +3,12 @@
 Solution to the $3^{rd}$ PACS challenge. Implementation of a Laplace Equation solver.
 
 The make file produces two executables: `main` and `performance_test`. <br>
-`main` is the main way to use the solver. It can be run with from the command line using `mpiexec -np n ./main`, where n is the number of
+`main` is the main way to use the solver. It can be run from the command line using `mpiexec -np n ./main`, where n is the number of
 processes you want to use. Upon launching, it will ask for the name of a file (extension included) in the `/src/parameters/`
 folder. Pressing enter without providing such name will use the default problem data. The solution to the equation will be
 written in *.vtk* format in the `/src/output/` folder in a file named `out_{name of the input file without extension}.vtk` <br>
 `performance_test` is used to test the speed and precision of the class on the default problem
-for a grid with $n = 2^k, k = 4, ..., 8$ points per side. `performance_test` is best use with the script
+for a grid with $n = 2^k, k = 4, ..., 8$ points per side. `performance_test` is best used with the script
 found in the `./test/` directory.
 
 
@@ -32,14 +32,14 @@ $$
 ## The `parameters` Struct ##
 
 Inside the namespace `laplace` is defined the struct `parameters` which collects all parameters
-relative to the problem, initialized by default to those of the above mentioned problem. The struct
-can be found in the `Parameters.hpp` file together with an explanation of what each parameter does
+relative to the problem, initialized by default to be equal to those of the one mentioned above. The struct
+can be found in the `Parameters.hpp` file together with an explanation of what each parameter represents
 
 
 
 ## The `Mesh` Class ##
 
-Inside the file `Mesh.hpp` is defined the `Mesh` calss, representing a Cartesian decomposition of a 
+Inside the file `Mesh.hpp` is defined the `Mesh` class, representing a Cartesian decomposition of a 
 rectangle. It comes with two constructors:
 
 * `Mesh(double xlb, double xub, double ylb, double yub, unsigned nx_, unsigned ny_)`;
@@ -64,7 +64,7 @@ The class provides the following methods:
 
 * `double delta_y() const`: returns the distance between consecutive points along the y axis;
 
-* `bool uniform() const`: returns true if `delta_x()` = `delta_y()`;
+* `bool uniform() const`: returns true if `delta_x() == delta_y()`;
 
 * `int to_VTK(const std::string& filename) const`: prints the information about the mesh in *.vtk* format on the
 file `filename`. Returns 1 if it couldn't open the file, 0 otherwise. 
@@ -73,7 +73,7 @@ file `filename`. Returns 1 if it couldn't open the file, 0 otherwise.
 
 ## The `solver` Class ##
 
-Inside the `Solver.hpp` file, in the `laplace` namespace is defined the `solver` class. This is the class used to 
+Inside the `Solver.hpp` file, under the namespace `laplace`, is defined the `solver` class. This is the class used to 
 numerically solve the Laplace equation using the Jacobi iteration method, either sequentially or parallely. 
 Going forward we'll use the following aliases: `Func = std::function<double(double, double)>` and `BC_Func = std::function<double(double)>`;
 
@@ -102,7 +102,7 @@ and the `sample.txt` file in the `/src/parameters/` folder;
 8. `solver(double x_lb, double x_ub, double y_lb, double y_ub, unsigned nx, unsigned ny, const Func& force, const BC_Func& bc0, const BC_Func& bc1, const BC_Func& bc2, const BC_Func& bc3, const std::string& bc_types)`:
 same as (7), but the mesh is constructed automatically with the given parameters;
 
-9. `solver(double x_lb, double x_ub, double y_lb, double y_ub, unsigned n,  const Func& force, const BC_Func& bc0, const BC_Func& bc1, const BC_Func& bc2, const BC_Func& bc3, const std::string& bc_types)`:
+9. `solver(double x_lb, double x_ub, double y_lb, double y_ub, unsigned n, const Func& force, const BC_Func& bc0, const BC_Func& bc1, const BC_Func& bc2, const BC_Func& bc3, const std::string& bc_types)`:
 same as (8)
 
 All these constructors come with a parallel version that takes two extra arguments at the end: `int rank_` and `int size_` which represent the rank
@@ -112,13 +112,13 @@ The class provides the following methods:
 
 * `void sequential_solve(unsigned max_it, double tol) const`: sequentially solves the Laplace equation. `max_it` is the maximum number of iterations
 allowed while `tol` is such that the algorithm is considered to have converged if the euclidean norm of the difference between two iterations is less than
-`tol`. `sequential_solve` can only be called by objects that were initialized with no given `rank` or with `rank` = 0;
+`tol`. `sequential_solve` can only be called by objects that were initialized with no given `rank` or with `rank == 0`;
 
 * `void parallel_solve(unsigned max_it, double tol) const`: parallely solves the Laplace equation. `max_it` and `tol` have the same roles as before.
-`parallel_solve` can only be called if the object was initialized with `size` > 1;
+`parallel_solve` can only be called if the object was initialized with `size > 1`;
 
-* `std::vector<double> solution() const`: returns the solution after a call to one of the solving methods. The solution is such that the value stored at
-the index `j*nx + i` corresponds to the value of the solution at the point $(x_i, y_j)$;
+* `std::vector<double> solution() const`: returns the solution obtained after a call to one of the solving methods. The solution is such that the value stored at
+the index `j*nx + i` corresponds to the value of the solution at the point $(x_i,  y_j)$;
 
 * `unsigned iterations() const`: returns the amount of iterations taken by the last call to one of the solving methods;
 
@@ -130,7 +130,8 @@ the index `j*nx + i` corresponds to the value of the solution at the point $(x_i
 
 * `std::vector<BC_Func> boundary_conditions() const`: returns the 4 boundary conditions used by the object;
 
-* `BC_Func boundary_condition(unsigned i) const`: returns the i-th boundary condition used by the object;
+* `BC_Func boundary_condition(unsigned i) const`: returns the i-th boundary condition used by the object. If $i >= 4$,
+it gets the k-th boundary condition, with `k = i % 4`;
 
 * `std::string boundary_types() const`: returns the string describing the boundary types used by the object;
 
@@ -139,8 +140,8 @@ the index `j*nx + i` corresponds to the value of the solution at the point $(x_i
 * `void set_boundary_conditions(const std::vector<BC_Func>& bcs)`: changes the boundary conditions to be equal to `bcs`. Resets
 convergence status, number of iterations and solution;
 
-* `void set_boundary_condition(unsigned i, const BC_Func& bc)`: changes the i-th boundary condition to be equal to `bc`. Resets
-convergence status, number of iterations and solution;
+* `void set_boundary_condition(unsigned i, const BC_Func& bc)`: changes the i-th boundary condition to be equal to `bc`. If $i >= 4$,
+it gets the k-th boundary condition, with `k = i % 4`. Resets convergence status, number of iterations and solution;
 
 * `void set_boundary_types(const std::string& bc_types)`: changes the string describing the boundary types to be equal to `bc_types`. 
 Resets convergence status, number of iterations and solution;
@@ -154,24 +155,25 @@ Returns 1 if it couldn't open the file, 0 otherwise.
 
 ## Parsers ##
 
-The `solver` class cannot accept `std::string` in place of one of the forces, thus parsers are provided in the `Parsers.hpp` file
+The `solver` class cannot accept `std::string` in place of one of the forces, thus, parsers are provided in the `Parsers.hpp` file
 under the namespace `parsing` to make using the `solver` class easier. There are two types of parsers:
 
-* `Force`: represents a 2 variable function and can thus be used for both the forcing term and the exact solution. It comes with
+* `Force`: represents a 2 variable function and can therefore be used for both the forcing term and the exact solution. It comes with
 the following:
 	- `Force()`: the default constructor that initializes the object without storing any function in it;
 	
-	- `Force(const std::string& expr)`: constructor where `expr` is the function to be parsed;
+	- `Force(const std::string& expr)`: constructor where `expr` is the function in **x** and **y** to be parsed;
 
 	- `Force(const Force& f)`: copy constructor;
 
 	- `Force& operator=(const Force& f)`: assignment operator;
 		
-	- `void set_expression(const std::string& new_expr)`: changes the function to be parsed to match `new_expr`;
+	- `void set_expression(const std::string& new_expr)`: changes the function to be parsed to match `new_expr`. `new_expr`
+	needs to be a function in **x** and **y**;
 		
 	- `double operator() (double x, double y) const`: evaluates the parsed function at $(x, y)$;
 
-* `Boundary_Condition`: represents a 1 variable function and can thus be used for the boundary terms. It comes with ù
+* `Boundary_Condition`: represents a 1 variable function and can as such be used for the boundary terms. It comes with
 the following:
 	- `Boundary_Condition()`: the default constructor that initializes the object without storing any function in it;
 
@@ -192,13 +194,15 @@ the following:
 
 	- `double operator() (double var) const`: evaluates the parsed function when its variable equals `var`.
 
-Both parser make use of the **muParser** library. As such the strings passed to them should be **muParser** readable.
+Both parser make use of the **muParser** library. As such any string passed to them should be **muParser** readable.
+Constant functions are accepted by both parsers. For the `Boundary_Condition` class, in such a case, any variable name
+is fine.
 
 
 
 ## Input and Output ##
 
-In the file `Input_Output`, under the namespace `laplace`, are defined the following functions:
+In the file `Input_Output.hpp`, under the namespace `laplace`, are defined the following functions:
 
 * `parameters read(const std::string& filename)`: reads file `filename` and returns a `parameter` struct matching
 the information in the file. For more in depth information on the file format look at the `sample.txt` file in the
@@ -242,4 +246,4 @@ inside of the namespace `Errors`, it provides an out of class alternative to `so
 
 To add new problems, read the `sample.txt` file in the `/src/parameters/` folder, create a file following its format
 and add it to the folder. In the same folder there are multiple other problems already
-implemented. `messy.txt` provides an exampe of how bad a readable file can get.
+implemented. `messy.txt` provides an example of how bad a readable file can get.
