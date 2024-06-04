@@ -1,0 +1,11 @@
+prefix=/home/davide_izzo/Challenge_1
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include/muParser
+
+Name: muparser
+Description: Mathematical expressions parser library
+Version: 2.3.4
+Requires:
+Libs: -L${libdir} -lmuparser
+Cflags: -I${includedir} 

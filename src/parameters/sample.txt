@@ -1,0 +1,37 @@
+# Sample Parameter File. Everything after a '#' is a comment
+# The parameters do not need to be in order, but they need to be each on a line of their own
+# All parameters that exist are contained in this file
+# Not mentioning a parameter or leaving its field empty will lead to using the default value
+# Mentioning a parameter and not following its name with an '=' might get you errors
+# Just like writing anything non-parameter outside of a comment
+
+x_lb = 0.	# Lower x bound of the domain
+x_ub = 1.	# Upper x bound of the domain
+y_lb = 0.	# Lower y bound of the domain
+y_ub = 1.	# Upper y bound of the domain
+
+nx = 64		# Number of points on the x axis
+ny = 64		# Number of points on the y axis
+
+force = -2*_e^(x+y)	# Forcing term in muParser readable format as a function of x and y
+
+bc_0 = exp(x+1)		# Boundary term for y = y_ub in muParser readable format as a function of x
+bc_1 = exp(y+1)		# Boundary term for x = x_ub in muParser readable format as a function of y
+bc_2 = exp(x)		# Boundary term for y = y_lb in muParser readable format as a function of x
+bc_3 = exp(y)		# Boundary term for x = x_lb in muParser readable format as a function of y
+
+bc_types = ndnd		# Boundary types given in clockwise order starting from the top boundary of the domain
+			# 'n' = Neumann Boundary, 'd' = Dirichlet Boundary
+			# Note: Using only Neumann Boundaries means the solution is only unique up to an additive
+			# constant. There's no real condition on what constant the solver will choose
+
+max_it = 100000		# Maximum number of iteration. Sadly std::stoi doesn't allow for exponential notation
+			# so you can't write 1e5
+
+tol = 1e-6		# Tolerance for the convergence check of the Jacobi method. std::stod DOES accept exponential notation
+
+u_ex = exp(x+y)		# Exact Solution in muParser readable format as a function of x and y. Not providing it and changing
+			# the forcing term / boundary terms / boundary types means the error won't be calculated
+
+# Note: all functions can also be constants with no variables. They cannot use variables other than the ones
+# listed in the comments next to them 

@@ -1,0 +1,21 @@
+u_ex = cos(sin(x*y)) - 0.75
+
+x_lb = -5.
+x_ub = 5.
+y_lb = -5.
+y_ub = 5.
+
+nx = 128
+ny = 128
+
+force = (x^2 + y^2)*(cos(sin(x*y))*(cos(x*y))^2 - sin(sin(x*y))*sin(x*y))
+
+bc_0 = cos(sin(5*x)) - 0.75
+bc_1 = cos(sin(5*y)) - 0.75
+bc_2 = cos(sin(5*x)) - 0.75
+bc_3 = cos(sin(5*y)) - 0.75
+
+bc_types = dddd
+
+max_it = 1000000
+tol = 1e-5

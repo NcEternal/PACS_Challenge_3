@@ -1,0 +1,15 @@
+# The default case, but with only Neumann Boundaries
+
+bc_0 = 2*_pi*sin(2*_pi*x)		
+bc_1 = 2*_pi*sin(2*_pi*y)		
+bc_2 = 2*_pi*sin(2*_pi*x)		
+bc_3 = 2*_pi*sin(2*_pi*y)
+
+bc_types = nnnn
+
+tol = 1e-4
+
+u_ex = sin(2*_pi*y)*sin(2*_pi*x)	# I have to provide an exact solution that's "different" from
+					# the default one, otherwise error won't be calculated.
+
+# This is also a lucky case where the undetermined constant that arises due to using only Neumann BCs is equal to 0

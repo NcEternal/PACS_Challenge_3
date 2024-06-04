@@ -1,0 +1,26 @@
+# A Messy Example to show how bad a readable parameter file can get
+# Since spaces and tabs are removed in the process of reading the
+# file, it doesn't matter how many there are between the parameter name, the '=' sign and
+# the value of the parameter
+
+
+x_lb=			# Default value of x_lb is 0.
+x_ub =	2.
+
+force=-((-4*exp(x) -4*x*exp(x)-x^2*exp(x)-1)/(x^2 + 4*x + 4) + 2)
+
+y_lb = -1.
+
+# Default value of y_ub is 1.
+
+bc_3=	ln(2)+y^2 - exp(0)
+bc_0	= ln(x+2) + 1 - exp(x)
+bc_2 =  log(x+2) + (-1)^2 - 	_e^x	
+bc_1 = ln(4)+y^2  - exp(2)
+
+nx = 128
+u_ex = ln(x + 2) + y^2 - exp(x)
+ny = 				# Default value of ny is 64
+tol = 1e-10
+
+# Default value of max it is 1e5

@@ -1,0 +1,22 @@
+u_ex = cos(x)*exp(y-y^2)
+
+x_lb = -5.
+x_ub = 5.
+y_lb = -3.
+y_ub = 3.
+
+nx = 256
+ny = 128
+
+force = 2*exp(-y^2+y)*cos(x)*(1 + 2*y - 2*y^2)
+
+bc_0 = cos(x)*exp(-6)
+bc_1 = cos(5)*exp(y-y^2)
+bc_2 = cos(x)*exp(-12)
+bc_3 = cos(5)*exp(y-y^2)
+
+bc_types = dddd
+
+max_it = 1000000
+
+tol = 1e-5
