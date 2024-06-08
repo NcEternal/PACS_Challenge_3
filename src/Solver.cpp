@@ -466,7 +466,7 @@ int solver::to_VTK(const std::string& filename) const {
 
 	/* Write to file */
 	vtkFile << "SCALARS scalars double\n";               // Description of the scalar field
-	vtkFile << "LOOKUP_TABLE default\n";                 // Color table
+	vtkFile << "LOOKUP_TABLE default\n";                 // Colour table
 
 	// Write vector field data
 	for (const auto& u_ij : m_solution) {

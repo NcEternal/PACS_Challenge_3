@@ -97,12 +97,10 @@ public:
 		m_mesh(mesh), m_force(force), m_bc{ bc0, bc1, bc2, bc3 }, m_bc_types(bc_types), rank(rank_), size(size_) { parallel_init(); assign_bc(); pre_calc_force(); }
 
 	solver(double x_lb, double x_ub, double y_lb, double y_ub, unsigned nx, unsigned ny, const Func& force, const BC_Func& bc0, const BC_Func& bc1, const BC_Func& bc2, const BC_Func& bc3,
-				   const std::string& bc_types, int rank_, int size_) :
-		solver(Mesh(x_lb, x_ub, y_lb, y_ub, nx, ny), force, bc0, bc1, bc2, bc3, bc_types, rank_, size_) {}
+		   const std::string& bc_types, int rank_, int size_) : solver(Mesh(x_lb, x_ub, y_lb, y_ub, nx, ny), force, bc0, bc1, bc2, bc3, bc_types, rank_, size_) {}
 
 	solver(double x_lb, double x_ub, double y_lb, double y_ub, unsigned n, const Func& force, const BC_Func& bc0, const BC_Func& bc1, const BC_Func& bc2, const BC_Func& bc3,
-				   const std::string& bc_types, int rank_, int size_) :
-		solver(Mesh(x_lb, x_ub, y_lb, y_ub, n), force, bc0, bc1, bc2, bc3, bc_types, rank_, size_) {}
+		   const std::string& bc_types, int rank_, int size_) : solver(Mesh(x_lb, x_ub, y_lb, y_ub, n), force, bc0, bc1, bc2, bc3, bc_types, rank_, size_) {}
 
 
 

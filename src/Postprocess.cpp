@@ -43,8 +43,8 @@ void to_VTK(const std::vector<double>& solution, const Mesh& mesh, const std::st
 		return;
 	}
 
-	vtkFile << "SCALARS scalars double\n";               // description of the scalar field
-	vtkFile << "LOOKUP_TABLE default\n";                 // color table
+	vtkFile << "SCALARS scalars double\n";               // Description of the scalar field
+	vtkFile << "LOOKUP_TABLE default\n";                 // Colour table
 
 	/* Write vector field data */
 	for (const auto& u_ij : solution) {
