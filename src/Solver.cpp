@@ -357,7 +357,7 @@ void solver::parallel_solve(unsigned max_it, double tol) const {
 			assign_nbc(std::vector<unsigned>({ 1, 2, 3 }), prev_it, limits, local_rows + 1, base, update_rule);
 	else if (rank == size - 1 && (m_bc_types.at(0) == 'n' || m_bc_types.at(1) == 'n' || m_bc_types.at(3) == 'n'))	// Rank size - 1, only boundaries 0, 1 and 3 matter
 			assign_nbc(std::vector<unsigned>({ 0, 1, 3 }), prev_it, limits, local_rows + 1, base, update_rule);
-	else if (rank != 0 && rank != size - 1 && (m_bc_types.at(1) == 'n' || m_bc_types.at(3) == 'n'))					// Other Ranks, only boundaries 1 and 3 matter
+	else if (m_bc_types.at(1) == 'n' || m_bc_types.at(3) == 'n')													// Other Ranks, only boundaries 1 and 3 matter
 			assign_nbc(std::vector<unsigned>({ 1, 3 }), prev_it, limits, local_rows + 1, base, update_rule);
 	/* Dirichlet case */
 	else												
