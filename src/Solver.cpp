@@ -235,12 +235,12 @@ void solver::assign_nbc(const std::vector<unsigned>& boundaries, const std::vect
 			v[1] = prev_it[j * n_cols + i + 1];
 
 		if (j == 0)							// Neumann BC on side 2
-			v[2] = prev_it[(j + 1) * n_cols + i] - 2 * hy * m_nbc_matrix[2][i];
+			v[2] = prev_it[(j + 1) * n_cols + i] + 2 * hy * m_nbc_matrix[2][i];
 		else 
 			v[2] = prev_it[(j - 1) * n_cols + i];
 		
 		if (i == 0)							// Neumann BC on side 3
-			v[3] = prev_it[j * n_cols + i + 1] - 2 * hx * m_nbc_matrix[3][j - not_rank0];
+			v[3] = prev_it[j * n_cols + i + 1] + 2 * hx * m_nbc_matrix[3][j - not_rank0];
 		else
 			v[3] = prev_it[j * n_cols + i - 1];
 

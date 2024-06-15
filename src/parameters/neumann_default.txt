@@ -2,8 +2,8 @@
 
 bc_0 = 2*_pi*sin(2*_pi*x)		
 bc_1 = 2*_pi*sin(2*_pi*y)		
-bc_2 = 2*_pi*sin(2*_pi*x)		
-bc_3 = 2*_pi*sin(2*_pi*y)
+bc_2 = -2*_pi*sin(2*_pi*x)		
+bc_3 = -2*_pi*sin(2*_pi*y)
 
 bc_types = nnnn
 

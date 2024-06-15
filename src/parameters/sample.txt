@@ -17,7 +17,7 @@ force = -2*_e^(x+y)	# Forcing term in muParser readable format as a function of 
 
 bc_0 = exp(x+1)		# Boundary term for y = y_ub in muParser readable format as a function of x
 bc_1 = exp(y+1)		# Boundary term for x = x_ub in muParser readable format as a function of y
-bc_2 = exp(x)		# Boundary term for y = y_lb in muParser readable format as a function of x
+bc_2 = -exp(x)		# Boundary term for y = y_lb in muParser readable format as a function of x
 bc_3 = exp(y)		# Boundary term for x = x_lb in muParser readable format as a function of y
 
 bc_types = ndnd		# Boundary types given in clockwise order starting from the top boundary of the domain
