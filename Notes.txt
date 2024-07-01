@@ -1,0 +1,8 @@
+- clear instructions for compilation and exectution
+- no openmp
+- Nuemann boundary conditions implemented
+- error decreases with mesh size and is the same for sequential and parallel case
+- computational time decreases with number of processes (scalability test ok) if mesh size is sufficiently small
+
+- no need for implementing separate methods for sequential and parallel code, you can write a single function that takes into account the presence of a single rank.:wq
+

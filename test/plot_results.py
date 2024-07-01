@@ -11,7 +11,7 @@ for file in sorted(os.listdir("./data")):
         processors = file[file.find("procs.csv") - 1] + " processors"
         for stat in stats:
             plt.figure(stat)
-            plt.plot(df["n"], df[stat], label = processors)
+            plt.semilogy(df["n"], df[stat], label = processors)
 
 for stat in stats:
     plt.figure(stat)
